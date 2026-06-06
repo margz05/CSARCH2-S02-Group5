@@ -12,6 +12,7 @@
 
 **Section:** S02  
 **Category Alignment:** Historical Computing. This topic traces the chronological history of video game hardware and architectural evolution, perfectly aligning with the historical computing focus assigned to Section S02.
+**GitHub Repository:** [https://github.com/margz05/CSARCH2-S02-Group5](https://github.com/margz05/CSARCH2-S02-Group5)
 
 ### Group Topic Theme
 **Evolution of Video Games (Through Computer Architecture)**
