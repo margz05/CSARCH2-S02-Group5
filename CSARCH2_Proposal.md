@@ -56,6 +56,7 @@ When a visitor clicks on a specific era, the layout dynamically updates to displ
 
 ### UI & Layout Responsiveness
 * **Mobile-Responsive Design:**
+* The layout, specifically the interactive timeline and dynamic content sections, will be designed to scale gracefully to mobile devices. It will likely switch from a horizontal timeline on desktop to a vertical scrolling timeline on mobile screens to ensure a seamless user experience.*
 
 ---
 
