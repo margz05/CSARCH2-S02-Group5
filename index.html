@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>From Pixels to Polygons</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Top portion -->
+</head>
+<body>
+
+
+  <header class="topArea" id="top">
+    <nav class="navbar" aria-label="Main navigation">
+    </nav>
+
+    <section class="topContent">
+      <p class="group">CSARCH2 Virtual Exhibit · Group 5</p>
+      <h1>From Pixels to Polygons</h1>
+      <p class="subtitle">A Silicon Quest Through Gaming</p>
+    </section>
+  </header>
+
+
+
+  <!-- Main Content  -->
+  <main>
+    <section class="timeline-section" id="timeline" aria-labelledby="timeline-title">
+      <div class="section-heading">
+        <p class="section-kicker">Interactive Historical Timeline</p>
+        <h2 id="timeline-title">Choose an era</h2>
+        <p>
+          Click a timeline era to explore the evolution of gaming, from the arcade machines of the 1970s to the next-gen experiences of the 2020s.
+        </p>
+      </div>
+
+      <div class="mainTimeline" role="tablist" aria-label="Gaming history eras">
+
+        <button class="era active" type="button" role="tab" aria-selected="true" data-era="1970s">
+          <span>1970s</span>
+          <small>Arcade</small>
+        </button>
+
+        <button class="era" type="button" role="tab" aria-selected="false" data-era="1980s">
+          <span>1980s</span>
+          <small>8-bit Home</small>
+        </button>
+
+        <button class="era" type="button" role="tab" aria-selected="false" data-era="1990s">
+          <span>1990s</span>
+          <small>16-bit & 3D</small>
+        </button>
+
+        <button class="era" type="button" role="tab" aria-selected="false" data-era="2000s">
+          <span>2000s</span>
+          <small>Online 3D</small>
+        </button>
+
+        <button class="era" type="button" role="tab" aria-selected="false" data-era="2010s">
+          <span>2010s</span>
+          <small>Mobile/Indie</small>
+        </button>
+
+        <button class="era" type="button" role="tab" aria-selected="false" data-era="2020s">
+          <span>2020s</span>
+          <small>Next-Gen</small>
+        </button>
+        
+      </div>
+
+      <section class="eraBoxCard" id="exhibit" aria-live="polite">
+        <div class="titleCard">
+          <h2 id="title">1970s · Arcade Machines</h2>
+          <p id="era-description">
+            .
+          </p>
+        </div>
+
+        <div class="info-boxes">
+          <article class="info-box">
+            <h3>Popular Games</h3>
+            <ul id="games"></ul>
+          </article>
+          <article class="info-box">
+            <h3>Popular Devices</h3>
+            <ul id="devices"></ul>
+          </article>
+          <article class="info-box">
+            <h3>Key Improvements</h3>
+            <ul id="improvements"></ul>
+          </article>
+        </div>
+
+      </section>
+    </section>
+
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
