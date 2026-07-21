@@ -1,0 +1,49 @@
+---
+import '../styles/arcade.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>From Pixels to Polygons</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="topArea" id="top">
+    <section class="topContent">
+      <p class="group-kicker">CSARCH2 Virtual Exhibit · Group 5</p>
+      <h1>From Pixels to Polygons</h1>
+      <p class="subtitle">A Silicon Quest Through Gaming</p>
+    </section>
+  </header>
+
+  <main>
+    <slot /> 
+  </main>
+
+  <footer style="text-align: center; margin-top: 5rem; padding-bottom: 3rem; color: var(--neon-cyan);">
+    <pre style="font-family: 'VT323', monospace; font-size: 1.2rem; line-height: 1.2;">
+     .-------------.
+     | .---------. |
+     | | SCORE:  | |
+     | |   4000  | |
+     | |_________| |
+     |             |
+     |      _      |
+     |    _| |_    |
+     |   |_   _|   |
+     |     |_|     |
+     |       ///   |
+     '-------------'
+    
+    INSERT COIN TO CONTINUE...
+    </pre>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+import ExhibitLayout from '../layouts/ExhibitLayout.astro';
+import Timeline from '../components/Timeline.jsx';
+import Era1970 from './1970s.mdx';
+import Era1980 from './1980s.mdx';
+import Era1990 from './1990s.mdx';
+import Era2000 from './2000s.mdx';
+import Era2010 from './2010s.mdx';
+import Era2020 from './2020s.mdx';
+
+<ExhibitLayout>
+
+<Timeline client:load />
+
+<section className="era-archives-container">
+  <div id="archive-1970s" className="mdx-archive hidden-archive">
+    <Era1970 />
+  </div>
+  
+  <div id="archive-1980s" className="mdx-archive hidden-archive">
+    <Era1980 />
+  </div>
+  
+  <div id="archive-1990s" className="mdx-archive hidden-archive">
+    <Era1990 />
+  </div>
+
+  <div id="archive-2000s" className="mdx-archive hidden-archive">
+    <Era2000 />
+  </div>
+
+  <div id="archive-2010s" className="mdx-archive hidden-archive">
+    <Era2010 />
+  </div>
+
+  <div id="archive-2020s" className="mdx-archive hidden-archive">
+    <Era2020 />
+  </div>
+</section>
+
+</ExhibitLayout>
