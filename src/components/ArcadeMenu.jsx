@@ -11,11 +11,16 @@ const eras = [
 ];
 
 export default function ArcadeMenu() {
+  // Automatically detects if you are on GitHub Pages or local development
+  const basePath = typeof window !== 'undefined' && window.location.pathname.includes('/CSARCH2-S02-Group5') 
+    ? '/CSARCH2-S02-Group5' 
+    : '';
+
   return (
     <div className={styles.cabinetGrid}>
       {eras.map((era) => (
         <a 
-          href={`/${era.id}`} 
+          href={`${basePath}/${era.id}`} 
           key={era.id} 
           className={styles.cabinetCard}
           style={{ '--cabinet-color': era.color }}

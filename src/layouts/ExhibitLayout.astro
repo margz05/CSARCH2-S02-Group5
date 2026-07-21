@@ -6,7 +6,9 @@ const { frontmatter, url } = Astro.props;
 const accentColor = frontmatter?.accentColor || '#66fcf1';
 const surfaceColor = frontmatter?.surfaceColor || '#1f2833';
 
-// Determine current era string from URL pathname (e.g. "/1970s" -> "1970s")
+// 1. Get the base path dynamically for GitHub Pages
+const base = import.meta.env.BASE_URL;
+
 const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
 const currentEra = pathSegments[0] || '';
 ---
@@ -31,16 +33,15 @@ const currentEra = pathSegments[0] || '';
     <main class="arcade-cabinet">
       <!-- Top Nav Bar -->
       <nav class="exhibit-nav">
-        <a href="/" class="home-coin-btn">◀ INSERT COIN / MAIN MENU</a>
+        <!-- 2. Fix the Home Button link here using `${base}` -->
+        <a href={`${base}/`} class="home-coin-btn">◀ INSERT COIN / MAIN MENU</a>
         <span class="nav-system-tag">CSARCH2 EXHIBIT</span>
       </nav>
 
-      <!-- Main Content from Markdown -->
       <div class="mdx-content-wrapper">
         <slot />
       </div>
 
-      <!-- Complex Inter-Decade Cartridge Switcher -->
       {currentEra && currentEra !== '' && <EraSwitcher currentEra={currentEra} client:load />}
     </main>
 
