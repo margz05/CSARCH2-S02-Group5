@@ -36,13 +36,29 @@ const currentEra = pathSegments[0] || '';
       </nav>
 
       <!-- Main Content from Markdown -->
-      <slot />
+      <div class="mdx-content-wrapper">
+        <slot />
+      </div>
 
       <!-- Complex Inter-Decade Cartridge Switcher -->
       {currentEra && currentEra !== '' && <EraSwitcher currentEra={currentEra} client:load />}
     </main>
 
     <style>
+      body.arcade-env {
+        background-color: #0b0f19;
+        color: #e0e6ed;
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+      }
+
+      .arcade-cabinet {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+      }
+
       .exhibit-nav {
         display: flex;
         justify-content: space-between;
@@ -53,7 +69,7 @@ const currentEra = pathSegments[0] || '';
       }
 
       .home-coin-btn {
-        font-family: var(--font-pixel);
+        font-family: 'Press Start 2P', monospace;
         font-size: 0.6rem;
         background: rgba(102, 252, 241, 0.1);
         color: var(--neon-accent, #66fcf1);
@@ -73,10 +89,14 @@ const currentEra = pathSegments[0] || '';
       }
 
       .nav-system-tag {
-        font-family: var(--font-pixel);
+        font-family: 'Press Start 2P', monospace;
         font-size: 0.5rem;
         color: #666;
         letter-spacing: 1px;
+      }
+
+      .mdx-content-wrapper {
+        line-height: 1.6;
       }
     </style>
   </body>

@@ -1,24 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './CoinDropIntro.module.css';
 
 export default function CoinDropIntro({ onBootComplete }) {
-  const [hasBooted, setHasBooted] = useState(true);
+  const [hasBooted, setHasBooted] = useState(false);
   const [isEntering, setIsEntering] = useState(true);
+  
+  // Drag State
   const [isDragging, setIsDragging] = useState(false);
-  const [dragPos, setDragPos] = useState({ x: 0, y: 0 });
-  const [bootState, setBootState] = useState('dropping'); // 'dropping' | 'typing' | 'loading' | 'fading'
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const dragStartRef = useRef({ x: 0, y: 0 });
+  
+  // States: 'dropping' -> 'aligning' -> 'inserting' -> 'typing' -> 'loading' -> 'fading'
+  const [bootState, setBootState] = useState('dropping'); 
   const [typedText, setTypedText] = useState('');
   const fullText = "⚡ STARTING GAME... INITIALIZING PIPELINE... ⚡";
 
   useEffect(() => {
+    // Production ready: Remembers if the user already dropped the coin
     const visited = sessionStorage.getItem('arcade_token_inserted');
-    if (!visited) {
-      setHasBooted(false);
-      const timer = setTimeout(() => setIsEntering(false), 1200);
-      return () => clearTimeout(timer);
-    } else {
+
+    if (visited) {
       setHasBooted(true);
       if (onBootComplete) onBootComplete();
+    } else {
+      const timer = setTimeout(() => setIsEntering(false), 1200);
+      return () => clearTimeout(timer);
     }
   }, [onBootComplete]);
 
@@ -40,6 +46,7 @@ export default function CoinDropIntro({ onBootComplete }) {
 
   useEffect(() => {
     if (bootState === 'loading') {
+      // INCREASED LOADING TIME: Changed from 1200ms to 2800ms (2.8 seconds)
       const timer = setTimeout(() => {
         setBootState('fading');
         setTimeout(() => {
@@ -47,7 +54,7 @@ export default function CoinDropIntro({ onBootComplete }) {
           setHasBooted(true);
           if (onBootComplete) onBootComplete();
         }, 700);
-      }, 1200);
+      }, 2800); 
       return () => clearTimeout(timer);
     }
   }, [bootState]);
@@ -81,54 +88,65 @@ export default function CoinDropIntro({ onBootComplete }) {
     } catch (e) {}
   };
 
-  const handleDragStart = (e) => {
+  const handlePointerDown = (e) => {
     if (bootState !== 'dropping' || isEntering) return;
+    
     setIsDragging(true);
+    e.target.setPointerCapture(e.pointerId); 
+    
+    dragStartRef.current = {
+      x: e.clientX - position.x,
+      y: e.clientY - position.y
+    };
   };
 
-  const handleDrag = (e) => {
-    if (!isDragging || bootState !== 'dropping') return;
-    if (e.clientX !== 0 && e.clientY !== 0) {
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
-      setDragPos({
-        x: e.clientX - centerX,
-        y: e.clientY - centerY,
-      });
-    }
+  const handlePointerMove = (e) => {
+    if (!isDragging) return;
+    
+    setPosition({
+      x: e.clientX - dragStartRef.current.x,
+      y: e.clientY - dragStartRef.current.y
+    });
   };
 
-  const handleDragEnd = (e) => {
-    if (!isDragging || bootState !== 'dropping') return;
+  const handlePointerUp = (e) => {
+    if (!isDragging) return;
+    
     setIsDragging(false);
+    e.target.releasePointerCapture(e.pointerId);
 
     const slotElement = document.getElementById('standalone-coin-slot');
     if (slotElement) {
       const rect = slotElement.getBoundingClientRect();
-      const dropX = e.clientX || (e.changedTouches && e.changedTouches[0].clientX);
-      const dropY = e.clientY || (e.changedTouches && e.changedTouches[0].clientY);
-
+      
       if (
-        dropX >= rect.left - 60 &&
-        dropX <= rect.right + 60 &&
-        dropY >= rect.top - 60 &&
-        dropY <= rect.bottom + 60
+        e.clientX >= rect.left - 60 &&
+        e.clientX <= rect.right + 60 &&
+        e.clientY >= rect.top - 60 &&
+        e.clientY <= rect.bottom + 60
       ) {
-        triggerBootSequence();
+        const tokenRect = e.target.getBoundingClientRect();
+        const targetX = position.x + (rect.left + rect.width / 2) - (tokenRect.left + tokenRect.width / 2);
+        const targetY = position.y + (rect.top + rect.height / 2) - (tokenRect.top + tokenRect.height / 2);
+
+        setBootState('aligning');
+        setPosition({ x: targetX, y: targetY - 60 }); 
+        
+        setTimeout(() => {
+          setBootState('inserting');
+          setPosition({ x: targetX, y: targetY + 30 }); 
+          playSound('drop');
+        }, 250);
+        
+        setTimeout(() => {
+          setBootState('typing');
+          playSound('boot');
+        }, 650);
         return;
       }
     }
-    setDragPos({ x: 0, y: 0 });
-  };
-
-  const triggerBootSequence = () => {
-    setIsDragging(false);
-    setBootState('typing');
-    playSound('drop');
-
-    setTimeout(() => {
-      playSound('boot');
-    }, 350);
+    
+    setPosition({ x: 0, y: 0 });
   };
 
   if (hasBooted) return null;
@@ -141,24 +159,40 @@ export default function CoinDropIntro({ onBootComplete }) {
         ${bootState === 'typing' || bootState === 'loading' ? styles.screenShake : ''}
         ${bootState === 'fading' ? styles.fadeOutOverlay : ''}
       `}
-      onMouseMove={handleDrag}
-      onMouseUp={handleDragEnd}
-      onTouchMove={(e) => handleDrag(e.touches[0])}
-      onTouchEnd={handleDragEnd}
+      style={{ pointerEvents: 'auto' }}
     >
-      {bootState === 'dropping' && (
+      {(bootState === 'dropping' || bootState === 'aligning' || bootState === 'inserting') && (
         <div className={`${styles.isolatedStage} ${isEntering ? styles.stageEntranceDrop : ''}`}>
-          <div className={styles.promptHeader}>
+          
+          <div className={styles.promptHeader} style={{ 
+            pointerEvents: 'none', 
+            transition: 'opacity 0.3s', 
+            opacity: (bootState === 'aligning' || bootState === 'inserting') ? 0 : 1 
+          }}>
             <p className={styles.promptMain}>DRAG TOKEN TO COIN SLOT</p>
           </div>
 
           <div
             className={styles.arcadeToken}
-            draggable
-            onDragStart={handleDragStart}
-            onTouchStart={handleDragStart}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            draggable={false} 
             style={{
-              transform: `translate(${dragPos.x}px, ${dragPos.y}px)`,
+              transform: `translate(${position.x}px, ${position.y}px) scale(${isDragging ? 1.1 : 1})`,
+              opacity: bootState === 'inserting' ? 0 : 1,
+              cursor: (bootState === 'aligning' || bootState === 'inserting') ? 'default' : (isDragging ? 'grabbing' : 'grab'),
+              zIndex: 9999,
+              touchAction: 'none', 
+              userSelect: 'none',
+              WebkitUserDrag: 'none',
+              transition: isDragging 
+                ? 'none' 
+                : bootState === 'inserting'
+                  ? 'transform 0.3s ease-in, opacity 0.2s ease-in 0.1s' 
+                  : bootState === 'aligning'
+                    ? 'transform 0.25s ease-out' 
+                    : 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)' 
             }}
           >
             <span className={styles.tokenSymbol}>TOKEN</span>
@@ -166,7 +200,11 @@ export default function CoinDropIntro({ onBootComplete }) {
 
           <div className={styles.coinSlotWrapper} id="standalone-coin-slot">
             <div className={styles.slotOpening}>
-              <div className={styles.slotGlow} />
+              <div className={styles.slotGlow} style={{ 
+                opacity: bootState === 'inserting' ? 1 : 0.6,
+                transform: bootState === 'inserting' ? 'scale(1.2)' : 'scale(1)',
+                transition: 'all 0.3s ease'
+              }} />
             </div>
             <span className={styles.slotText}>COIN SLOT</span>
           </div>
@@ -182,7 +220,8 @@ export default function CoinDropIntro({ onBootComplete }) {
 
           {(bootState === 'loading' || bootState === 'fading') && (
             <div className={styles.loadingBarContainer}>
-              <div className={styles.loadingBarFill} />
+              {/* SLOWED DOWN THE BAR FILL ANIMATION TO MATCH THE NEW TIMER */}
+              <div className={styles.loadingBarFill} style={{ animationDuration: '2.5s' }} />
             </div>
           )}
         </div>

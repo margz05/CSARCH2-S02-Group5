@@ -99,13 +99,18 @@
   box-shadow: 0 0 45px rgba(255, 215, 0, 0.9), 0 8px 0 #b36b00;
   position: absolute;
   z-index: 20;
-  user-select: none;
   transition: box-shadow 0.2s ease;
+  
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none; 
+  touch-action: none; 
 }
 
-.arcadeToken:active {
+.arcadeToken:active, .dragging {
   cursor: grabbing;
-  transform: scale(1.08);
+  scale: 1.08; 
+  z-index: 9999 !important;
 }
 
 .tokenSymbol {

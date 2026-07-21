@@ -4,9 +4,12 @@ import ArcadeMenu from '../components/ArcadeMenu.jsx';
 import CoinDropIntro from '../components/CoinDropIntro.jsx';
 ---
 
+  <CoinDropIntro client:only="react" />
+
 <ExhibitLayout frontmatter={{ title: "From Pixels to Polygons: A Silicon Quest" }}>
-  <!-- First-Time Visitor Interactive Coin Drop Overlay -->
-  <CoinDropIntro client:load />
+  
+  <!-- Use client:only="react" so Astro doesn't break the click events! -->
+
 
   <div class="arcade-homepage">
     <!-- Retro Arcade HUD Ticker -->
