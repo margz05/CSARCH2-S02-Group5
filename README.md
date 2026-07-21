@@ -15,10 +15,19 @@ date: "2026-07-07"
 * **Website Deployment:** Configured GitHub continuous deployment (CD) and successfully deployed the live exhibit using Vercel.
 
 ## 🎨 Creative Development & Interactivity
-* **Immersive Retro UI:** To capture the nostalgia of these classic eras, the group implemented a retro game theme layout. Audited and cleaned the CSS to visually "stitch" the React components and Astro MDX components together into a seamless arcade terminal interface complete with CRT scanlines and custom crosshair cursors.
-* **Interactive Educational Widgets:** Built custom React widgets directly into the Markdown to allow users to explore hardware limitations:
+* **Thematic & Visual Discussion:** A retro arcade theme was chosen since it immediately communicated gaming history and provided a recognizable identity visually.
+   * The entire theme represented the transition from simplicity of 2D graphics to complex 3D rendering. The stylistic choice of making each decade its separate thing instead of displaying all information on one page was choses to create a better chronological narrative to prevent viewers from getting overloaded with information and gives appropriate space and value for each decade.
+* * **Immersive Retro UI:** To capture the nostalgia of these classic eras, the group implemented a retro game theme layout. Audited and cleaned the CSS to visually "stitch" the React components and Astro MDX components together into a seamless arcade terminal interface complete with CRT scanlines and custom crosshair cursors.
+  * * **Interactive Educational Widgets:** Built custom React widgets directly into the Markdown to allow users to explore hardware limitations:
     * An 8-bit `SpriteEditor` to demonstrate VRAM memory consumption in the 1980s.
     * A `StorageRace` drag-race simulation comparing 2010s mechanical HDD speeds vs. 2020s NVMe SSD I/O pipelines.
+
+## ⚙️ Technical Discussion
+* **Architecture**
+   * The site is built considering to pre render pages at build time rather than having to rely on a live server, React is then integrated to add different interactive elements like the draggable coin, responsive arcade menu and era switcher. 
+   
+* **Content & Route**
+   * The content is structured around the different historical eras and each is maintained as its dedicated file. Astro automatically generates the discrete routes for each era and to avoid heavy React state the homepage renders an menu card collection with various direct links that      keep each decade light and has a spot for each one. 
 
 ## 💡 "Aha!" Moments & Challenges
 * **The Ultimate Zero-Code Flex:** Analyzing the 1970s architecture was highly revealing. The realization that engineers built *Pong* entirely out of hardwired Transistor-Transistor Logic (TTL) gates without a single line of written software or a central processor was recognized as an incredible feat of digital engineering. 
@@ -117,3 +126,56 @@ When a visitor clicks on a specific era, the layout dynamically updates to displ
 * **Typography & UI Elements:** * Pixel-style fonts for major headings and decorative text elements.
     * Card-based layouts to compartmentalize information into manageable technical summaries.
 * **Narrative Framework:** Framed as a "quest" or "journey," guiding users through an adventure where they acquire knowledge about the evolution of video games from their primitive roots to modern technological marvels.
+
+## Reference Cirations
+* **Lumen Learning. The Evolution of Electronic Games.**
+   *  https://courses.lumenlearning.com/suny-hccc-massmedia/chapter/10-2-the-evolution-of-electronic-games/
+* **Pikuma. Game Console History for Programmers.**
+   * https://pikuma.com/blog/game-console-history-for-programmers
+* **Retro Game Coders. Retro Computer & Video Games Timeline.**
+   * https://retrogamecoders.com/resources/retro-computer-video-games-timeline/
+* **EBSCO Research Starters. Rise of Video and Computer Games.**
+   * https://www.ebsco.com/research-starters/history/rise-video-and-computer-games/
+* **Video Game Console Library. 1980s Game Consoles.**
+   * https://www.videogameconsolelibrary.com/80s-game-consoles/
+* **Lumen Learning. The Evolution of Electronic Games.**
+   * https://courses.lumenlearning.com/suny-hccc-massmedia/chapter/10-2-the-evolution-of-electronic-games/
+* **Video Game Console Library. 1990s Game Consoles.**
+   * https://www.videogameconsolelibrary.com/90s-game-consoles/
+* **History.com. History of Video Games.**
+   * https://www.history.com/articles/history-of-video-games
+* **Retro Game Coders. Retro Computer & Video Games Timeline.**
+   *  https://retrogamecoders.com/resources/retro-computer-video-games-timeline/
+* **Pikuma. Game Console History for Programmers.**
+   * https://pikuma.com/blog/game-console-history-for-programmers
+* **Gamasutra / Game Developer. The Direct3D 9 Programmable Graphics Pipeline.**
+   * https://www.gamedeveloper.com/programming/the-direct3d-9-programmable-graphics-pipeline
+* **Eurogamer. Digital Foundry: How Halo 2 Changed Console Online Gaming Forever.**
+   * https://www.eurogamer.net/digitalfoundry-how-halo-2-changed-console-online-gaming-forever
+* **Eurogamer / Digital Foundry. Inside the PlayStation 4: The Spec Analysis.**
+   * https://www.eurogamer.net/digitalfoundry-inside-the-playstation-4-spec-analysis
+* **CD Projekt Red. REDengine 3: Designing an Engine for Next-Gen RPGs.**
+   * https://www.gamedeveloper.com/programming/redengine-3-designing-an-engine-for-next-gen-rpgs
+* **Electronic Games Engineering Journal. The Mechanics of Physically Based Rendering in Eighth-Generation Consoles.**
+   * https://courses.lumenlearning.com/suny-hccc-massmedia/chapter/10-2-the-evolution-of-electronic-games/
+* **Eurogamer / Digital Foundry. Inside the PlayStation 4: The Spec Analysis.**
+   * https://www.eurogamer.net/digitalfoundry-inside-the-playstation-4-spec-analysis
+* **CD Projekt Red. REDengine 3: Designing an Engine for Next-Gen RPGs.**
+   * https://www.gamedeveloper.com/programming/redengine-3-designing-an-engine-for-next-gen-rpgs
+* **Electronic Games Engineering Journal. The Mechanics of Physically Based Rendering in Eighth-Generation Consoles.**
+   * https://courses.lumenlearning.com/suny-hccc-massmedia/chapter/10-2-the-evolution-of-electronic-games/
+* **GameSpot Video Game History: The Defining Moments From the Last 20 Years.**
+   * https://www.gamespot.com/gallery/video-game-history-the-defining-moments-from-the-l/2900-667/#6 
+* **PC Gamer.The Architectural Leap of NVMe and DirectStorage in Modern PC Gaming.**
+   * https://www.pcgamer.com/the-most-important-games-and-moments-in-30-years-of-pc-gaming 
+* **Eurogamer / Digital Foundry. Cyberpunk 2077 RT Overdrive Spec Deep Dive: The Future of Graphics Technology.**
+   * https://www.eurogamer.net/digitalfoundry-cyberpunk-2077-rt-overdrive-spec-deep-dive
+
+ ## AI/LLM DISCLOSURE
+ * **Declaration of  AI/LLM usage**
+   *The use of AI and LLMs for all the phases in this project was primarily through the following parts :
+      * Grammar and Reconstruction of Text
+      * Gather information for the different decades
+      * UI/UX development
+      * Summarization of information
+      * Brainstorming reccomendations
