@@ -1,49 +1,83 @@
 ---
-import '../styles/arcade.css';
+import '../styles/global.css';
+import EraSwitcher from '../components/EraSwitcher.jsx';
+
+const { frontmatter, url } = Astro.props;
+const accentColor = frontmatter?.accentColor || '#66fcf1';
+const surfaceColor = frontmatter?.surfaceColor || '#1f2833';
+
+// Determine current era string from URL pathname (e.g. "/1970s" -> "1970s")
+const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
+const currentEra = pathSegments[0] || '';
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>From Pixels to Polygons</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{frontmatter?.title || "From Pixels to Polygons"}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style define:vars={{ accentColor, surfaceColor }}>
+      :root {
+        --neon-accent: var(--accentColor);
+        --neon-secondary: var(--surfaceColor);
+      }
+    </style>
+  </head>
+  <body class="crt-effect arcade-env">
+    <main class="arcade-cabinet">
+      <!-- Top Nav Bar -->
+      <nav class="exhibit-nav">
+        <a href="/" class="home-coin-btn">◀ INSERT COIN / MAIN MENU</a>
+        <span class="nav-system-tag">CSARCH2 EXHIBIT</span>
+      </nav>
 
-  <header class="topArea" id="top">
-    <section class="topContent">
-      <p class="group-kicker">CSARCH2 Virtual Exhibit · Group 5</p>
-      <h1>From Pixels to Polygons</h1>
-      <p class="subtitle">A Silicon Quest Through Gaming</p>
-    </section>
-  </header>
+      <!-- Main Content from Markdown -->
+      <slot />
 
-  <main>
-    <slot /> 
-  </main>
+      <!-- Complex Inter-Decade Cartridge Switcher -->
+      {currentEra && currentEra !== '' && <EraSwitcher currentEra={currentEra} client:load />}
+    </main>
 
-  <footer style="text-align: center; margin-top: 5rem; padding-bottom: 3rem; color: var(--neon-cyan);">
-    <pre style="font-family: 'VT323', monospace; font-size: 1.2rem; line-height: 1.2;">
-     .-------------.
-     | .---------. |
-     | | SCORE:  | |
-     | |   4000  | |
-     | |_________| |
-     |             |
-     |      _      |
-     |    _| |_    |
-     |   |_   _|   |
-     |     |_|     |
-     |       ///   |
-     '-------------'
-    
-    INSERT COIN TO CONTINUE...
-    </pre>
-  </footer>
+    <style>
+      .exhibit-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px dashed rgba(102, 252, 241, 0.3);
+      }
 
-</body>
+      .home-coin-btn {
+        font-family: var(--font-pixel);
+        font-size: 0.6rem;
+        background: rgba(102, 252, 241, 0.1);
+        color: var(--neon-accent, #66fcf1);
+        padding: 0.6rem 1rem;
+        border: 2px solid var(--neon-accent, #66fcf1);
+        border-radius: 6px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        box-shadow: 0 0 10px rgba(102, 252, 241, 0.1);
+      }
+
+      .home-coin-btn:hover {
+        background: var(--neon-accent, #66fcf1);
+        color: #000;
+        box-shadow: 0 0 20px var(--neon-accent, #66fcf1);
+        transform: translateY(-2px);
+      }
+
+      .nav-system-tag {
+        font-family: var(--font-pixel);
+        font-size: 0.5rem;
+        color: #666;
+        letter-spacing: 1px;
+      }
+    </style>
+  </body>
 </html>

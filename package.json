@@ -19,6 +19,9 @@
     "react-dom": "^19.2.7"
   },
   "engines": {
-  "node": "24.x"
+    "node": "24.x || 26.x"
+  },
+  "overrides": {
+    "vite": "^7.0.0"
   }
 }

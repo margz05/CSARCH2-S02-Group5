@@ -1,4 +1,9 @@
-import SpriteEditor from '../components/SpriteEditor.jsx';
+---
+layout: ../layouts/ExhibitLayout.astro
+title: "1980s — Home Consoles & 8-Bit Graphics"
+accentColor: "#E60012" 
+surfaceColor: "#4A0005"
+---
 
 # 1980s — Home Consoles & 8-Bit Graphics
 
@@ -24,7 +29,6 @@ This division of hardware responsibilities became the standard architecture for 
 ---
 
 ## Graphics Technology: Tile Maps and Sprites
-<SpriteEditor client:load />
 Limited memory forced developers to create efficient ways of displaying graphics. Instead of storing an entire image for every screen, consoles divided backgrounds into small reusable blocks called **tiles**, typically measuring **8 × 8 pixels**. These tiles were stored only once in memory and arranged into larger maps to create complete levels. Reusing tiles dramatically reduced memory consumption while allowing developers to build expansive scrolling environments. 
 
 Moving objects such as characters, enemies, and projectiles were displayed as **sprites**. Sprites were independent graphical objects drawn over the background without modifying the underlying image. This allowed smooth movement while minimizing processing requirements. 

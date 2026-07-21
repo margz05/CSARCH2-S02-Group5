@@ -1,4 +1,9 @@
-import StorageRace from '../components/StorageRace.jsx';
+---
+layout: ../layouts/ExhibitLayout.astro
+title: "2020s — Next Generation & Modern Frontiers"
+accentColor: "#D400FF" 
+surfaceColor: "#330040"
+---
 
 # 2020s — Next Generation & Modern Frontiers
 
@@ -10,7 +15,6 @@ From a technical perspective, the 2020s represent an era where traditional hardw
 ---
 
 ## NVMe Storage Subsystems and Direct I/O Architecture
-<StorageRace client:load />
 The absolute most significant architectural bottleneck broken in the 2020s was the data storage conduit. After decades of relying on spinning magnetic hard drives or slow SATA protocols, ninth-generation consoles and modern PCs adopted high-speed **Non-Volatile Memory Express (NVMe) solid-state storage subsystems**. These storage architectures can push raw asset data into system memory at bandwidths exceeding 5.5 GB/s, representing an exponential upgrade over prior storage mediums.
 
 To harness this blistering speed without overwhelming the main processor, hardware developers engineered custom silicon decompression blocks (such as Sony's custom I/O processors and Microsoft's Velocity Architecture decompression hardware). In previous generations, the CPU spent massive amounts of execution cycles unpacking compressed texture and sound archives pulled from disk storage. In the 2020s, data streams bypass the CPU entirely through APIs like Microsoft DirectStorage. Compressed files are routed from the NVMe SSD directly to the hardware decompression block and sent immediately to video memory. This structural change eliminates asset streaming lag, allows for near-instant loading times, and enables game engines to alter virtual assets dynamically in fractions of a second.
