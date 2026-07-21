@@ -6,11 +6,10 @@ const { frontmatter, url } = Astro.props;
 const accentColor = frontmatter?.accentColor || '#66fcf1';
 const surfaceColor = frontmatter?.surfaceColor || '#1f2833';
 
-// 1. Get the base path dynamically for GitHub Pages
 const base = import.meta.env.BASE_URL;
 
 const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
-const currentEra = pathSegments[0] || '';
+const currentEra = pathSegments.length > 1 ? pathSegments[1] : (pathSegments[0] !== 'CSARCH2-S02-Group5' ? pathSegments[0] : '');
 ---
 
 <!DOCTYPE html>
@@ -33,7 +32,7 @@ const currentEra = pathSegments[0] || '';
     <main class="arcade-cabinet">
       <!-- Top Nav Bar -->
       <nav class="exhibit-nav">
-        <!-- 2. Fix the Home Button link here using `${base}` -->
+        <!-- Home Button link using base -->
         <a href={`${base}/`} class="home-coin-btn">◀ INSERT COIN / MAIN MENU</a>
         <span class="nav-system-tag">CSARCH2 EXHIBIT</span>
       </nav>

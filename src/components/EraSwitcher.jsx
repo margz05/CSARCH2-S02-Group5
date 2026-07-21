@@ -11,6 +11,9 @@ const allEras = [
 ];
 
 export default function EraSwitcher({ currentEra }) {
+  const rawBase = import.meta.env.BASE_URL || '/';
+  const baseUrl = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
   return (
     <div className={styles.switcherContainer}>
       <div className={styles.switcherHeader}>
@@ -19,10 +22,11 @@ export default function EraSwitcher({ currentEra }) {
       <div className={styles.cartridgeRow}>
         {allEras.map((era) => {
           const isActive = currentEra === era.id;
+
           return (
             <a
               key={era.id}
-              href={`/${era.id}`}
+              href={`${baseUrl}${era.id}/`}
               className={`${styles.cartridgeBtn} ${isActive ? styles.activeCartridge : ''}`}
               style={{ '--cart-color': era.color }}
             >

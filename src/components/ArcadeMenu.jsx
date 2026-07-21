@@ -11,16 +11,15 @@ const eras = [
 ];
 
 export default function ArcadeMenu() {
-  // Automatically detects if you are on GitHub Pages or local development
-  const basePath = typeof window !== 'undefined' && window.location.pathname.includes('/CSARCH2-S02-Group5') 
-    ? '/CSARCH2-S02-Group5' 
-    : '';
+  // Astro dynamically supplies the base URL ('/CSARCH2-S02-Group5/' or '/')
+  const rawBase = import.meta.env.BASE_URL || '/';
+  const baseUrl = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 
   return (
     <div className={styles.cabinetGrid}>
       {eras.map((era) => (
         <a 
-          href={`${basePath}/${era.id}`} 
+          href={`${baseUrl}${era.id}/`} 
           key={era.id} 
           className={styles.cabinetCard}
           style={{ '--cabinet-color': era.color }}
